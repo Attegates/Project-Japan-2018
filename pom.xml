@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.atteg</groupId>
-    <artifactId>MeasurementPersistJPA</artifactId>
+    <artifactId>JapanProjectWork</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>MeasurementPersistJPA</name>
+    <name>JapanProjectWork</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
