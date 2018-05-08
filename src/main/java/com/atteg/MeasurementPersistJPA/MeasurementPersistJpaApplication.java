@@ -63,7 +63,7 @@ public class MeasurementPersistJpaApplication implements CommandLineRunner {
 
         System.out.println(mm);
 
-        SpringApplication.exit(context);
+        //SpringApplication.exit(context);
 
     }
 }
