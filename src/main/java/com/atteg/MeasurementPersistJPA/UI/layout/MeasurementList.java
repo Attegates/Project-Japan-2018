@@ -34,13 +34,17 @@ public class MeasurementList extends VerticalLayout {
     }
 
     private void update() {
-        setTodos(repository.findAll());
+        setMeasurements(repository.findAll());
     }
 
-    private void setTodos(List<Measurement> measurements) {
+    private void setMeasurements(List<Measurement> measurements) {
         this.measurements = measurements;
         removeAllComponents();
-        measurements.forEach(measurement -> addComponent(new MeasurementLayout(measurement)));
+        measurements.forEach(measurement -> {
+            MeasurementLayout measurementLayout = new MeasurementLayout(measurement);
+            measurementLayout.addLayoutClickListener(e -> System.out.println("xxx"));
+            addComponent(measurementLayout);
+        });
     }
 
 }

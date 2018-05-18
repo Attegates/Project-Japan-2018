@@ -141,6 +141,10 @@ public class Measurement implements Serializable {
         return "Measurement{" + "id=" + id + ", date=" + date + ", leftLeg=" + leftLeg + ", leftArm=" + leftArm + ", rightLeg=" + rightLeg + ", rightArm=" + rightArm + ", torso=" + torso + ", results=" + results + '}';
     }
     
+    public String getIdDateString() {
+        return "Measurement " + id + " on " + date;
+    }
+    
     
 
 
