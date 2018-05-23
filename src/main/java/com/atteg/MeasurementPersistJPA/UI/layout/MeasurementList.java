@@ -42,7 +42,11 @@ public class MeasurementList extends VerticalLayout {
         removeAllComponents();
         measurements.forEach(measurement -> {
             MeasurementLayout measurementLayout = new MeasurementLayout(measurement);
-            measurementLayout.addLayoutClickListener(e -> System.out.println("xxx"));
+            /*
+            measurementLayout.addLayoutClickListener(e -> {
+                System.out.println(measurement.getId());
+            });
+            */
             addComponent(measurementLayout);
         });
     }

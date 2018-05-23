@@ -5,6 +5,7 @@
  */
 package com.atteg.MeasurementPersistJPA.UI;
 
+import com.atteg.MeasurementPersistJPA.UI.View.MainView;
 import com.atteg.MeasurementPersistJPA.UI.layout.Colour;
 import com.atteg.MeasurementPersistJPA.UI.layout.MeasurementList;
 import com.atteg.MeasurementPersistJPA.UI.layout.TestLayout;
@@ -25,7 +26,10 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.navigator.SpringNavigator;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -41,38 +45,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SpringUI
 @Theme("valo")
 public class MyUI extends UI {
+
+    Navigator navigator;
     
-    //Navigator navigator;
-
-    private VerticalLayout layout;
-
     @Autowired
-    MeasurementList measurementList;
-
+    SpringViewProvider viewProvider;
+    
     @Override
     protected void init(VaadinRequest request) {
-        setupLayout();
-        addHeader();
-        addMeasurementList();
+        navigator = new Navigator(this, this);
+        navigator.addProvider(viewProvider);
+        navigator.addView(MainView.NAME, MainView.class);
+
         //this.createChart();
         //createThreeColourChart(22.0);
     }
+/*
 
-    private void setupLayout() {
-        layout = new VerticalLayout();
-        layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        setContent(layout);
-    }
-
-    private void addHeader() {
-        Label header = new Label("Measurements");
-        header.addStyleName(ValoTheme.LABEL_H1);
-        layout.addComponent(header);
-
-    }
-
-    private void addMeasurementList() {
-        layout.addComponent(measurementList);
+    private void addButton() {
+        Button btn = new Button();
+        btn.addClickListener(e -> createChart());
+        layout.addComponent(btn);
     }
 
     private void createChart() {
@@ -180,5 +173,5 @@ public class MyUI extends UI {
         //chart.setSizeFull();
         layout.addComponent(chart);
     }
-
+*/
 }
