@@ -1,6 +1,5 @@
 package com.atteg.MeasurementPersistJPA.UI.View;
 
-import com.atteg.MeasurementPersistJPA.UI.layout.MeasurementList;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ExternalResource;
@@ -30,14 +29,11 @@ public class MainView extends VerticalLayout implements View {
 
     public static final String NAME = "";
 
-    @Autowired
-    MeasurementList measurementList;
 
     @PostConstruct
     void init() {
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addHeader();
-        addMeasurementList();
         Link lnk = new Link("MeasurementView", new ExternalResource("#!" + MeasurementView.NAME));
 
         addComponent(lnk);
@@ -47,10 +43,6 @@ public class MainView extends VerticalLayout implements View {
         Label header = new Label("Measurements");
         header.addStyleName(ValoTheme.LABEL_H1);
         addComponent(header);
-    }
-
-    private void addMeasurementList() {
-        addComponent(measurementList);
     }
 
     @Override

@@ -5,19 +5,17 @@
  */
 package com.atteg.MeasurementPersistJPA.UI.View;
 
-import com.atteg.MeasurementPersistJPA.UI.layout.PaskaKusiLayout;
+import com.atteg.MeasurementPersistJPA.chart.ChartBuilder;
 import com.atteg.MeasurementPersistJPA.model.Measurement;
-import com.atteg.MeasurementPersistJPA.model.Results;
 import com.atteg.MeasurementPersistJPA.repository.MeasurementRepository;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Grid;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Optional;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,12 +26,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SpringView(name = MeasurementView.NAME)
 public class MeasurementView extends VerticalLayout implements View {
 
-    public static final String NAME = "measurement";
+    public static final String NAME = "measurements";
 
     @Autowired
     MeasurementRepository measurementRepository;
+    
+    @Autowired ChartBuilder chartBuilder;
 
-    private Measurement measurement;
+    ComboBox<Measurement> comboBox;
+
+    private List<Measurement> measurements;
 
     @PostConstruct
     void init() {
@@ -43,26 +45,13 @@ public class MeasurementView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        // Should have 1 and only 1 parameter that is the measurement id.
-        if (event.getParameters() != null && isLong(event.getParameters())) {
-            Long id = Long.parseLong(event.getParameters());
-            Optional<Measurement> m = measurementRepository.findById(id);
+        comboBox = new ComboBox<>("Measurements");
+        this.measurements = measurementRepository.findAll();
+        comboBox.setItemCaptionGenerator(Measurement::getIdDateString);
+        comboBox.setItems(measurements);
+        addComponent(comboBox);
+        addComponent(chartBuilder.fatPercentChart(measurements.get(0).getResults().getFatPercent()));
 
-            measurement = m.get();
-            
-
-            addComponent(new PaskaKusiLayout(measurement));
-        }
-
-    }
-
-    private boolean isLong(String s) {
-        try {
-            Long.parseLong(s);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 
 }

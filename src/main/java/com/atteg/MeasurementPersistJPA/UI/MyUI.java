@@ -6,36 +6,12 @@
 package com.atteg.MeasurementPersistJPA.UI;
 
 import com.atteg.MeasurementPersistJPA.UI.View.MainView;
-import com.atteg.MeasurementPersistJPA.UI.layout.Colour;
-import com.atteg.MeasurementPersistJPA.UI.layout.MeasurementList;
-import com.atteg.MeasurementPersistJPA.UI.layout.TestLayout;
-import com.byteowls.vaadin.chartjs.ChartJs;
-import com.byteowls.vaadin.chartjs.config.BarChartConfig;
-import com.byteowls.vaadin.chartjs.data.BarDataset;
-import com.byteowls.vaadin.chartjs.data.Dataset;
-import com.byteowls.vaadin.chartjs.data.LineDataset;
-import com.byteowls.vaadin.chartjs.options.Position;
-import com.byteowls.vaadin.chartjs.options.annotation.DrawTime;
-import com.byteowls.vaadin.chartjs.options.annotation.LineLabel;
-import com.byteowls.vaadin.chartjs.options.scale.Axis;
-import com.byteowls.vaadin.chartjs.options.scale.BaseScale;
-import com.byteowls.vaadin.chartjs.options.scale.DefaultScale;
-import com.byteowls.vaadin.chartjs.options.scale.LinearScale;
-import com.byteowls.vaadin.chartjs.utils.ColorUtils;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.spring.navigator.SpringViewProvider;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
