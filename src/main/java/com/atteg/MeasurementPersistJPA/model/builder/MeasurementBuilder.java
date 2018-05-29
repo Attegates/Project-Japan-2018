@@ -116,6 +116,7 @@ public class MeasurementBuilder {
         results.seteCWMass(parseDoubleVal("wO", parsedData));
         results.seteCWPercent(parseDoubleVal("wo", parsedData));
         results.setiCWMass(parseDoubleVal("wI", parsedData));
+        results.setSex(parseSex("GE", parsedData));
         return results;
     }
 
@@ -129,5 +130,10 @@ public class MeasurementBuilder {
     
     private Date parseDate(String key, Map<String, String> parsedData) throws ParseException {
         return new SimpleDateFormat("dd/MM/yyyy").parse(parsedData.get(key));
+    }
+    
+    private Sex parseSex(String key, Map<String, String> parsedData) {
+        int val = parseIntVal(key, parsedData);
+        return val == 1 ? Sex.MALE : Sex.FEMALE;            
     }
 }

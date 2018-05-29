@@ -8,6 +8,7 @@ package com.atteg.MeasurementPersistJPA.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,9 @@ public class Results implements Serializable {
 
     @Column(name = "age")
     private int age;
+    @Column(name = "sex")
+    @Enumerated
+    private Sex sex;
     @Column(name = "height")
     private double height;
     @Column(name = "weight")
@@ -68,7 +72,7 @@ public class Results implements Serializable {
     public Results() {
     }
 
-    public Results(int age, double height, double weight, double fatPercent, double fatMass, double muscleMass, double boneMass, double bMI, int visceralFat, int metabolicAge, double fatFreeMass, double bodyWaterMass, double bodyWaterPercent, double iCWMass, double eCWMass, double eCWPercent) {
+    public Results(int age, double height, double weight, double fatPercent, double fatMass, double muscleMass, double boneMass, double bMI, int visceralFat, int metabolicAge, double fatFreeMass, double bodyWaterMass, double bodyWaterPercent, double iCWMass, double eCWMass, double eCWPercent, Sex sex) {
         this.age = age;
         this.height = height;
         this.weight = weight;
@@ -85,6 +89,7 @@ public class Results implements Serializable {
         this.iCWMass = iCWMass;
         this.eCWMass = eCWMass;
         this.eCWPercent = eCWPercent;
+        this.sex = sex;
     }
 
     public Long getId() {
@@ -221,6 +226,14 @@ public class Results implements Serializable {
 
     public void seteCWPercent(double eCWPercent) {
         this.eCWPercent = eCWPercent;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     public Measurement getMeasurement() {
