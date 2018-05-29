@@ -5,6 +5,8 @@
  */
 package com.atteg.MeasurementPersistJPA.chart;
 
+import com.atteg.MeasurementPersistJPA.model.Measurement;
+import com.atteg.MeasurementPersistJPA.model.Sex;
 import com.byteowls.vaadin.chartjs.ChartJs;
 import com.byteowls.vaadin.chartjs.config.BarChartConfig;
 import com.byteowls.vaadin.chartjs.data.BarDataset;
@@ -12,6 +14,7 @@ import com.byteowls.vaadin.chartjs.options.annotation.DrawTime;
 import com.byteowls.vaadin.chartjs.options.annotation.LineLabel;
 import com.byteowls.vaadin.chartjs.options.scale.Axis;
 import com.byteowls.vaadin.chartjs.options.scale.DefaultScale;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -60,17 +63,18 @@ public class ChartBuilder {
         return barConfig;
     }
 
-    public ChartJs createThreeColourChart(double result) {
+    public ChartJs visceralFatChart(double result) {
         BarChartConfig barConfig = this.baseConfig(result);
+        
+        double[] intervals = ValueIntervals.VISCERALFAT;
+        
         barConfig.
                 data()
                 .labels("Level")
                 .addDataset(
-                        new BarDataset().backgroundColor(Colour.LBLUE).label("Low").data(20.0))
+                        new BarDataset().backgroundColor(Colour.GREEN).label("Healthy").data(intervals[0]))
                 .addDataset(
-                        new BarDataset().backgroundColor(Colour.GREEN).label("Normal").data(5.0))
-                .addDataset(
-                        new BarDataset().backgroundColor(Colour.RED).label("High").data(10.0))
+                        new BarDataset().backgroundColor(Colour.RED).label("Excessive").data(intervals[1]))
                 .and();
 
         ChartJs chart = new ChartJs(barConfig);
@@ -79,9 +83,11 @@ public class ChartBuilder {
         return chart;
     }
 
-    public ChartJs fatPercentChart(double result) {
+    public ChartJs fatPercentChart(double result, Sex sex) {
         BarChartConfig barConfig = this.baseConfig(result);
         barConfig.horizontal();
+        
+        double[] intervals = sex == Sex.MALE ? ValueIntervals.FATPERCENTMALE : ValueIntervals.FATPERCENTFEMALE; 
         
         barConfig.
                 data()
@@ -90,22 +96,22 @@ public class ChartBuilder {
                         new BarDataset().
                                 backgroundColor(Colour.LBLUE).
                                 label("Underfat").
-                                data(ValueIntervals.FATPERCENTMALE[0]))
+                                data(intervals[0]))
                 .addDataset(
                         new BarDataset().
                                 backgroundColor(Colour.GREEN).
                                 label("Healthy").
-                                data(ValueIntervals.FATPERCENTMALE[1]))
+                                data(intervals[1]))
                 .addDataset(
                         new BarDataset().
                                 backgroundColor(Colour.YELLOW).
                                 label("Overfat").
-                                data(ValueIntervals.FATPERCENTMALE[2]))
+                                data(intervals[2]))
                 .addDataset(
                         new BarDataset().
                                 backgroundColor(Colour.RED).
                                 label("Obese").
-                                data(ValueIntervals.FATPERCENTMALE[3]))
+                                data(intervals[3]))
                 .and();
 
         ChartJs chart = new ChartJs(barConfig);
@@ -115,5 +121,8 @@ public class ChartBuilder {
         //chart.setSizeFull();
         return chart;
     }
-
+    
+    /*
+    public ChartJs timelineChart(List<Measurement> measurements, )
+    */
 }

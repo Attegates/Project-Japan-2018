@@ -5,9 +5,6 @@
  */
 package com.atteg.MeasurementPersistJPA.chart;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  *
  * @author VStore
@@ -16,13 +13,19 @@ public class ValueIntervals {
 
     /**
      * [12, 22, 27, 40]
-     * 0 - 12 Underfat, 12 - 22 healthy, 22 - 27 overfat. 27 -> obese
+     * 0 to 12 Underfat, 12 to 22 healthy, 22 to 27 overfat. 27+ obese
      */
     public static final double[] FATPERCENTMALE = {12, 22 - 12, 27 - 22, 40 - 27};
 
     /** [22, 33, 40, 55]
-     * 0 - 22 Underfat, 22 - 33 healthy, 33 - 40 overfat. 40 -> obese
+     * 0 to 22 Underfat, 22 to 33 healthy, 33 to 40 overfat. 40+ obese
      */
-    public static final double[] FATPERCENTFEMALE = {22, 33, 40, 55};
+    public static final double[] FATPERCENTFEMALE = {22, 33 - 22, 40 - 33, 60 - 40};
+    
+    /**
+     * 
+     * 0 to 12 Healthy, 12 to 60 Excessive.
+     */
+    public static final double[] VISCERALFAT = {12, 60 - 12};
 
 }

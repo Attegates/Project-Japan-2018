@@ -31,7 +31,8 @@ public class MeasurementView extends VerticalLayout implements View {
     @Autowired
     MeasurementRepository measurementRepository;
     
-    @Autowired ChartBuilder chartBuilder;
+    @Autowired
+    ChartBuilder chartBuilder;
 
     ComboBox<Measurement> comboBox;
 
@@ -50,7 +51,8 @@ public class MeasurementView extends VerticalLayout implements View {
         comboBox.setItemCaptionGenerator(Measurement::getIdDateString);
         comboBox.setItems(measurements);
         addComponent(comboBox);
-        addComponent(chartBuilder.fatPercentChart(measurements.get(0).getResults().getFatPercent()));
+        addComponent(chartBuilder.fatPercentChart(measurements.get(0).getResults().getFatPercent(), measurements.get(0).getResults().getSex()));
+        addComponent(chartBuilder.visceralFatChart(measurements.get(0).getResults().getVisceralFat()));
 
     }
 
