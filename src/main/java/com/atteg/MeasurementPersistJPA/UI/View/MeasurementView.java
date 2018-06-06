@@ -5,15 +5,20 @@
  */
 package com.atteg.MeasurementPersistJPA.UI.View;
 
+import com.atteg.MeasurementPersistJPA.UI.layout.MeasurementLayout;
+import com.atteg.MeasurementPersistJPA.UI.layout.TimelineLayout;
 import com.atteg.MeasurementPersistJPA.chart.ChartBuilder;
 import com.atteg.MeasurementPersistJPA.model.Measurement;
 import com.atteg.MeasurementPersistJPA.repository.MeasurementRepository;
+import com.byteowls.vaadin.chartjs.ChartJs;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -30,7 +35,7 @@ public class MeasurementView extends VerticalLayout implements View {
 
     @Autowired
     MeasurementRepository measurementRepository;
-    
+
     @Autowired
     ChartBuilder chartBuilder;
 
@@ -38,22 +43,75 @@ public class MeasurementView extends VerticalLayout implements View {
 
     private List<Measurement> measurements;
 
+    ChartJs chart;
+    
+
+    /**
+     * Content changes to MeasurementLayout or TimelineLayout
+     * depending on which is chosen from the radiobutton group.
+     */
+    AbstractOrderedLayout content;
+
+    private enum Option {
+        Single, Timeline
+    };
+
+    RadioButtonGroup<Option> group;
+
     @PostConstruct
     void init() {
-        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponent(new Label("drhhafaeeryeryreyaery"));
+        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);        
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        comboBox = new ComboBox<>("Measurements");
         this.measurements = measurementRepository.findAll();
-        comboBox.setItemCaptionGenerator(Measurement::getIdDateString);
-        comboBox.setItems(measurements);
-        addComponent(comboBox);
-        addComponent(chartBuilder.fatPercentChart(measurements.get(0).getResults().getFatPercent(), measurements.get(0).getResults().getSex()));
-        addComponent(chartBuilder.visceralFatChart(measurements.get(0).getResults().getVisceralFat()));
 
+        group = new RadioButtonGroup<>();
+        group.setItems(Option.Single, Option.Timeline);
+        addComponent(group);
+
+        group.addValueChangeListener(e -> {
+            if (e.getValue() == Option.Single) {
+                ValueChangeSingle();
+            } else if (e.getValue() == Option.Timeline) {
+                ValueChangeTimeline();
+            }
+        });
+    }
+
+    private void ValueChangeSingle() {
+        /*
+        if (this.chart != null) {
+            removeComponent(chart);
+        }
+        chart = chartBuilder.fatPercentChart(measurements.get(0).getResults().getFatPercent(), measurements.get(0).getResults().getSex());
+        System.out.println("single");
+        addComponent(chart);
+        */
+        if (this.content != null) {
+            removeComponent(content);
+        }
+        this.content = new MeasurementLayout(measurements);
+        addComponent(content);
+    }
+
+    private void ValueChangeTimeline() {
+        /*
+        if (this.chart != null) {
+            removeComponent(chart);
+        }
+        chart = chartBuilder.visceralFatChart(measurements.get(0).getResults().getVisceralFat());
+        System.out.println("timeline");
+        addComponent(chart);
+        
+        */
+
+        if (this.content != null) {
+            removeComponent(content);
+        }
+        this.content = new TimelineLayout();
+        addComponent(content);
     }
 
 }
