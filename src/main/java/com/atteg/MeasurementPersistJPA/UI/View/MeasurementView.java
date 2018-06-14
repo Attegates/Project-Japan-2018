@@ -17,7 +17,6 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
@@ -81,32 +80,14 @@ public class MeasurementView extends VerticalLayout implements View {
     }
 
     private void ValueChangeSingle() {
-        /*
-        if (this.chart != null) {
-            removeComponent(chart);
-        }
-        chart = chartBuilder.fatPercentChart(measurements.get(0).getResults().getFatPercent(), measurements.get(0).getResults().getSex());
-        System.out.println("single");
-        addComponent(chart);
-        */
         if (this.content != null) {
             removeComponent(content);
         }
-        this.content = new MeasurementLayout(measurements);
+        this.content = new MeasurementLayout(measurements, chartBuilder);
         addComponent(content);
     }
 
     private void ValueChangeTimeline() {
-        /*
-        if (this.chart != null) {
-            removeComponent(chart);
-        }
-        chart = chartBuilder.visceralFatChart(measurements.get(0).getResults().getVisceralFat());
-        System.out.println("timeline");
-        addComponent(chart);
-        
-        */
-
         if (this.content != null) {
             removeComponent(content);
         }

@@ -5,13 +5,17 @@
  */
 package com.atteg.MeasurementPersistJPA.UI.layout;
 
+import com.atteg.MeasurementPersistJPA.chart.ChartBuilder;
 import com.atteg.MeasurementPersistJPA.model.Measurement;
 import com.atteg.MeasurementPersistJPA.model.Results;
+import com.atteg.MeasurementPersistJPA.model.Sex;
+import com.byteowls.vaadin.chartjs.ChartJs;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,65 +26,83 @@ public class MeasurementLayout extends VerticalLayout {
 
     private final ComboBox<Measurement> comboBox;
     private final List<Measurement> measurements;
+    private final ChartBuilder chartBuilder;
 
-    private final List<Button> buttons;
+    private final Panel panel;
 
-    private ButtonLayout buttonLayout;
-    
+    private final VerticalLayout buttonLayout;
 
-    public MeasurementLayout(List<Measurement> measurements) {
+    /**
+     * Used to align the buttonlayout and the chart side by side.
+     */
+    private final HorizontalLayout content;
+
+    public MeasurementLayout(List<Measurement> measurements, ChartBuilder chartBuilder) {
         this.measurements = measurements;
-        this.buttons = new ArrayList<>();
-        this.buttonLayout = new ButtonLayout();
+        this.chartBuilder = chartBuilder;
+        this.buttonLayout = new VerticalLayout();
+
+        this.content = new HorizontalLayout();
+        this.content.setSizeFull();
+
+        this.panel = new Panel();
+
         comboBox = new ComboBox<>("Measurements");
         comboBox.setItemCaptionGenerator(Measurement::getIdDateString);
         comboBox.setItems(measurements);
         comboBox.addValueChangeListener(e -> {
-            removeComponent(this.buttonLayout);
-            buttonLayout.updateButtons(e.getValue());
-            addComponent(buttonLayout);
+            removeComponent(this.content);
+            this.content.removeAllComponents();
+            updateButtons(e.getValue());
+            content.addComponent(buttonLayout);
+            addComponent(content);
         });
         addComponent(comboBox);
-
     }
 
-    private class ButtonLayout extends VerticalLayout {
-        
-        private void updateButtons(Measurement m) {
-            removeAllComponents();
-            if (m == null) {
-                return;
-            }
+    private void updateButtons(Measurement m) {
+        buttonLayout.removeAllComponents();
 
-            buttons.clear();
-            Results r = m.getResults();
-            Button weight = new Button();
-            Button fatPercent = new Button();
-            Button muscleMass = new Button();
-            Button boneMass = new Button();
-            Button bMI = new Button();
-            Button visceralFat = new Button();
-            Button metabolicAge = new Button();
-            Button waterMass = new Button();
-            weight.setCaption("" + r.getWeight());
-            buttons.addAll(Arrays.asList(weight, fatPercent, muscleMass,
-                    boneMass, bMI, visceralFat,
-                    metabolicAge, waterMass));
-            addComponents(buttons.toArray(new Button[buttons.size()]));
+        // If no measurement is chosen don't update buttons.
+        if (m == null) {
+            return;
         }
+
+        Results r = m.getResults();
+        Button weight = new Button("Weight: " + r.getWeight() + " kg");
+        Button fatPercent = new Button("Fat percent: " + r.getFatPercent() + " %");
+        Button muscleMass = new Button("Muscle mass: " + r.getMuscleMass() + " kg");
+        Button boneMass = new Button("Bone mass: " + r.getBoneMass() + " kg");
+        Button bMI = new Button("BMI: " + r.getbMI());
+        Button visceralFat = new Button("Visceral fat level: " + r.getVisceralFat());
+        Button metabolicAge = new Button("Metabolic age: " + r.getMetabolicAge());
+        Button waterPercent = new Button("Total body water %: " + r.getBodyWaterPercent());
+
+        visceralFat.addClickListener(e -> {
+            setChartToContent(chartBuilder.visceralFatChart(r.getVisceralFat()));
+        });
+        fatPercent.addClickListener(e -> {
+            setChartToContent(chartBuilder.fatPercentChart(r.getFatPercent(), r.getSex()));
+        });
+        waterPercent.addClickListener(e -> {
+            setChartToContent(chartBuilder.waterPercentChart(r.getBodyWaterPercent(), r.getSex()));
+        });
+        bMI.addClickListener(e -> {
+            setChartToContent(chartBuilder.bMIChart(r.getbMI()));
+        });
+
+        buttonLayout.addComponents(new Button[]{weight, fatPercent, muscleMass,
+            boneMass, bMI, visceralFat, metabolicAge, waterPercent});
     }
 
-    // Luo napit
-    // Lisää eventlistenerit (tyhjennä chart/info, piirrä uusi).
-    /*
-    Weight
-    Fat %
-    Muscle mass
-    Bone mass
-    BMI
-    Visceral fat
-    Metabolic age
-    Water mass
-    Limbs (yks iso kuva jossa eritelty raajojen rasva %, (rasvamassa?) ja lihasmassa)
-     */
+    private void setChartToContent(ChartJs chart) {
+        content.removeComponent(panel);
+        chart.setWidth("90%");
+        panel.setContent(chart);
+        content.addComponent(panel);
+
+        content.setExpandRatio(buttonLayout, 1.0f);
+        content.setExpandRatio(panel, 2.0f);
+    }
+
 }
