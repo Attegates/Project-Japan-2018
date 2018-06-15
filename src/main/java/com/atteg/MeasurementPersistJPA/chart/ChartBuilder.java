@@ -5,15 +5,21 @@
  */
 package com.atteg.MeasurementPersistJPA.chart;
 
+import com.atteg.MeasurementPersistJPA.UI.layout.ResultOption;
 import com.atteg.MeasurementPersistJPA.model.Measurement;
 import com.atteg.MeasurementPersistJPA.model.Sex;
 import com.byteowls.vaadin.chartjs.ChartJs;
 import com.byteowls.vaadin.chartjs.config.BarChartConfig;
+import com.byteowls.vaadin.chartjs.config.LineChartConfig;
 import com.byteowls.vaadin.chartjs.data.BarDataset;
+import com.byteowls.vaadin.chartjs.data.LineDataset;
+import com.byteowls.vaadin.chartjs.options.Position;
 import com.byteowls.vaadin.chartjs.options.annotation.DrawTime;
 import com.byteowls.vaadin.chartjs.options.annotation.LineLabel;
 import com.byteowls.vaadin.chartjs.options.scale.Axis;
+import com.byteowls.vaadin.chartjs.options.scale.CategoryScale;
 import com.byteowls.vaadin.chartjs.options.scale.DefaultScale;
+import com.byteowls.vaadin.chartjs.options.scale.LinearScale;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -191,7 +197,70 @@ public class ChartBuilder {
         return chart;
     }
 
-    /*
-    public ChartJs timelineChart(List<Measurement> measurements, )
-     */
+    public ChartJs timelineChart(List<Measurement> measurements, ResultOption option) {
+        LineChartConfig lineConfig = new LineChartConfig();
+
+        String[] labels = new String[measurements.size()];
+        Double[] data = new Double[measurements.size()];
+
+        switch (option) {
+            case WEIGHT:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getWeight();
+                    labels[i] = measurements.get(i).getDate().toString();
+                }
+                break;
+            case FATPERCENT:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getFatPercent();
+                    labels[i] = measurements.get(i).getDate().toString();
+                }
+                break;
+            case MUSCLEMASS:
+                break;
+            case BONEMASS:
+                break;
+            case BMI:
+                break;
+            case VISCERALFAT:
+                break;
+            case METABOLICAGE:
+                break;
+            case WATERPERCENT:
+                break;
+            default:
+                return null;
+        }
+
+        lineConfig.options()
+                .responsive(true)
+                .title()
+                .display(true)
+                .text("Timeline chart")
+                .and()
+                .events()
+                .scales()
+                .add(Axis.X, new CategoryScale()
+                        .display(true))
+                .add(Axis.Y, new LinearScale()
+                        .display(true)
+                        .scaleLabel()
+                        .display(true)
+                        .labelString("Values")
+                        .and()
+                        .position(Position.LEFT))
+                .and()
+                .done();
+
+        lineConfig.data()
+                .labels(labels)
+                .addDataset(
+                        new LineDataset().label("").fill(false).data(data))
+                .and();
+
+        ChartJs chart = new ChartJs(lineConfig);
+        chart.setJsLoggingEnabled(true);
+        return chart;
+    }
+
 }

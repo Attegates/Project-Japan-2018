@@ -41,8 +41,6 @@ public class MeasurementView extends VerticalLayout implements View {
     ComboBox<Measurement> comboBox;
 
     private List<Measurement> measurements;
-
-    ChartJs chart;
     
 
     /**
@@ -91,7 +89,7 @@ public class MeasurementView extends VerticalLayout implements View {
         if (this.content != null) {
             removeComponent(content);
         }
-        this.content = new TimelineLayout();
+        this.content = new TimelineLayout(measurements, chartBuilder);
         addComponent(content);
     }
 

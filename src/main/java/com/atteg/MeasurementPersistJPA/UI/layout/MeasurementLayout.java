@@ -50,6 +50,7 @@ public class MeasurementLayout extends VerticalLayout {
         comboBox = new ComboBox<>("Measurements");
         comboBox.setItemCaptionGenerator(Measurement::getIdDateString);
         comboBox.setItems(measurements);
+        comboBox.setTextInputAllowed(false);
         comboBox.addValueChangeListener(e -> {
             removeComponent(this.content);
             this.content.removeAllComponents();
