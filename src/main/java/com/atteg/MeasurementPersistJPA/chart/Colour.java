@@ -7,11 +7,12 @@ package com.atteg.MeasurementPersistJPA.chart;
 
 /**
  *
- * @author VStore
+ * @author Attegates
  */
 public class Colour {
     public final static String YELLOW = "#f7f32c"; 
     public final static String RED = "#ff3d3d"; 
     public final static String LBLUE = "#70c7f9";
     public final static String GREEN = "#2ff72b";
+    public final static String BLACK = "#000000";
 }

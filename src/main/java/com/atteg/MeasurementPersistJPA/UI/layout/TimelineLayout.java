@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  *
- * @author VStore
+ * @author Attegates
  */
 public class TimelineLayout extends VerticalLayout {
 
@@ -41,18 +41,18 @@ public class TimelineLayout extends VerticalLayout {
         this.content = new HorizontalLayout();
         this.content.setSizeFull();
         this.chartPanel = new Panel();
-
+        
         comboBox.setItems(ResultOption.values());
         ItemCaptionGenerator<ResultOption> captionGenerator = (ResultOption r) -> captionMap.get(r);
         comboBox.setItemCaptionGenerator(captionGenerator);
         comboBox.setTextInputAllowed(false);
 
         comboBox.addValueChangeListener(e -> {
-            //content.removeComponent(chartPanel);
-            ChartJs chart = chartBuilder.timelineChart(measurements, e.getValue());
-            //chart.setWidth("70%");
-            //chartPanel.setContent(chart);
-            //content.addComponent(chartPanel);
+            if (e.getValue() == null) {
+                content.removeComponent(chartPanel);
+                return;
+            }
+            ChartJs chart = chartBuilder.timelineChart(measurements, e.getValue(), captionMap.get(e.getValue()));
             setChartToContent(chart);
         });
 

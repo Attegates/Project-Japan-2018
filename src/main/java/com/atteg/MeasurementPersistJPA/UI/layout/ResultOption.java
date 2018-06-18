@@ -7,7 +7,7 @@ package com.atteg.MeasurementPersistJPA.UI.layout;
 
 /**
  *
- * @author VStore
+ * @author Attegates
  */
 public enum ResultOption {
     

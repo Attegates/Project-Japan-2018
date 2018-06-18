@@ -19,12 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
- *
+ * Comparator compares the date of the measurement.
  * @author Atte
  */
 @Entity
 @Table(name = "measurement")
-public class Measurement implements Serializable {
+public class Measurement implements Serializable, Comparable<Measurement> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -144,9 +144,14 @@ public class Measurement implements Serializable {
     public String getIdDateString() {
         return "Measurement " + id + " on " + date;
     }
-    
-    
 
-
-
+    /**
+     * To sort by date.
+     * @param o
+     * @return 
+     */
+    @Override
+    public int compareTo(Measurement o) {
+        return this.date.compareTo(o.date);
+    }
 }

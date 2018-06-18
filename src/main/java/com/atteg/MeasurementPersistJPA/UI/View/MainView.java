@@ -35,8 +35,10 @@ public class MainView extends VerticalLayout implements View {
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addHeader();
         Link lnk = new Link("MeasurementView", new ExternalResource("#!" + MeasurementView.NAME));
+        Link lnktest = new Link("TestView", new ExternalResource("#!" + TestView.NAME));
 
         addComponent(lnk);
+        addComponent(lnktest);
     }
 
     private void addHeader() {

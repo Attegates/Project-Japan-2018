@@ -45,7 +45,6 @@ public class ChartBuilder {
     private static final int FATPERCENTFEMALEMIDDLE = 30;
 
     /**
-     *
      * 0 to 12 Healthy, 12 to 60 Excessive.
      */
     private static final double[] VISCERALFAT = {12, 60 - 12};
@@ -58,9 +57,15 @@ public class ChartBuilder {
     private final double[] BMI = {18.5, 25 - 18.5, 30 - 25, 50 - 30};
     private final int BMIMIDDLE = 25;
 
+    /**
+     * Normal range 50 to 65.
+     */
     private final double[] WATERPERCENTMALE = {50, 65 - 50, 100 - 65};
     private final int WATERMASSMALEMIDDLE = 50;
 
+    /**
+     * Normal range 45 to 60.
+     */
     private final double[] WATERPERCENTFEMALE = {45, 60 - 45, 100 - 60};
     private final int WATERMASSFEMALEMIDDLE = 50;
 
@@ -197,46 +202,17 @@ public class ChartBuilder {
         return chart;
     }
 
-    public ChartJs timelineChart(List<Measurement> measurements, ResultOption option) {
+    public ChartJs timelineChart(List<Measurement> measurements, ResultOption option, String label) {
         LineChartConfig lineConfig = new LineChartConfig();
 
-        String[] labels = new String[measurements.size()];
-        Double[] data = new Double[measurements.size()];
-
-        switch (option) {
-            case WEIGHT:
-                for (int i = 0; i < data.length; i++) {
-                    data[i] = measurements.get(i).getResults().getWeight();
-                    labels[i] = measurements.get(i).getDate().toString();
-                }
-                break;
-            case FATPERCENT:
-                for (int i = 0; i < data.length; i++) {
-                    data[i] = measurements.get(i).getResults().getFatPercent();
-                    labels[i] = measurements.get(i).getDate().toString();
-                }
-                break;
-            case MUSCLEMASS:
-                break;
-            case BONEMASS:
-                break;
-            case BMI:
-                break;
-            case VISCERALFAT:
-                break;
-            case METABOLICAGE:
-                break;
-            case WATERPERCENT:
-                break;
-            default:
-                return null;
-        }
+        String[] labels = getLabelsForTimelineChart(measurements);
+        Double[] data = getDataForTimelineChart(measurements, option);
 
         lineConfig.options()
                 .responsive(true)
                 .title()
                 .display(true)
-                .text("Timeline chart")
+                .text(label)
                 .and()
                 .events()
                 .scales()
@@ -246,7 +222,7 @@ public class ChartBuilder {
                         .display(true)
                         .scaleLabel()
                         .display(true)
-                        .labelString("Values")
+                        .labelString("")
                         .and()
                         .position(Position.LEFT))
                 .and()
@@ -255,7 +231,13 @@ public class ChartBuilder {
         lineConfig.data()
                 .labels(labels)
                 .addDataset(
-                        new LineDataset().label("").fill(false).data(data))
+                        new LineDataset().
+                                label("").
+                                fill(false).
+                                data(data).
+                                backgroundColor(Colour.BLACK).
+                                borderColor(Colour.BLACK).
+                                lineTension(0))
                 .and();
 
         ChartJs chart = new ChartJs(lineConfig);
@@ -263,4 +245,67 @@ public class ChartBuilder {
         return chart;
     }
 
+    private Double[] getDataForTimelineChart(List<Measurement> measurements, ResultOption option) {
+        // Ensure measurements is sorted (by date)
+        measurements.sort(null);
+        Double[] data = new Double[measurements.size()];
+
+        switch (option) {
+            case WEIGHT:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getWeight();
+                }
+                break;
+            case FATPERCENT:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getFatPercent();
+                }
+                break;
+            case MUSCLEMASS:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getMuscleMass();
+                }
+                break;
+            case BONEMASS:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getBoneMass();
+                }
+                break;
+            case BMI:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getbMI();
+                }
+                break;
+            case VISCERALFAT:
+                for (int i = 0; i < data.length; i++) {                    
+                    data[i] = (double)measurements.get(i).getResults().getVisceralFat();
+                }
+                break;
+            case METABOLICAGE:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = (double)measurements.get(i).getResults().getMetabolicAge();
+                }
+                break;
+            case WATERPERCENT:
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = measurements.get(i).getResults().getBodyWaterPercent();
+                }
+                break;
+            default:
+                return null;
+        }
+        return data;
+    }
+
+    private String[] getLabelsForTimelineChart(List<Measurement> measurements) {
+        // Ensure measurements is sorted (by date)
+        measurements.sort(null);
+        String[] labels = new String[measurements.size()];
+
+        for (int i = 0; i < labels.length; i++) {
+            labels[i] = measurements.get(i).getDate().toString();
+        }
+
+        return labels;
+    }
 }

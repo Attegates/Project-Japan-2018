@@ -7,7 +7,7 @@ package com.atteg.MeasurementPersistJPA.model;
 
 /**
  *
- * @author VStore
+ * @author Attegates
  */
 public enum Sex {
     MALE, FEMALE;

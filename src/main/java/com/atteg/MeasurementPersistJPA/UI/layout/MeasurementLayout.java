@@ -8,14 +8,12 @@ package com.atteg.MeasurementPersistJPA.UI.layout;
 import com.atteg.MeasurementPersistJPA.chart.ChartBuilder;
 import com.atteg.MeasurementPersistJPA.model.Measurement;
 import com.atteg.MeasurementPersistJPA.model.Results;
-import com.atteg.MeasurementPersistJPA.model.Sex;
 import com.byteowls.vaadin.chartjs.ChartJs;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,7 +99,7 @@ public class MeasurementLayout extends VerticalLayout {
         chart.setWidth("90%");
         panel.setContent(chart);
         content.addComponent(panel);
-
+        
         content.setExpandRatio(buttonLayout, 1.0f);
         content.setExpandRatio(panel, 2.0f);
     }
