@@ -1,5 +1,6 @@
 package com.atteg.MeasurementPersistJPA;
 
+import com.atteg.MeasurementPersistJPA.model.Measurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,8 @@ import com.atteg.MeasurementPersistJPA.repository.ResultsRepository;
 import com.atteg.MeasurementPersistJPA.repository.RightArmRepository;
 import com.atteg.MeasurementPersistJPA.repository.RightLegRepository;
 import com.atteg.MeasurementPersistJPA.repository.TorsoRepository;
+import com.atteg.MeasurementPersistJPA.repository.UserRepository;
+import java.util.List;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,6 +38,8 @@ public class MeasurementPersistJpaApplication implements CommandLineRunner {
     TorsoRepository torsoRepository;
     @Autowired
     ResultsRepository resultsRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     private ConfigurableApplicationContext context;
@@ -68,12 +73,18 @@ public class MeasurementPersistJpaApplication implements CommandLineRunner {
         Measurement mmm = this.measurementBuilder.buildMeasurement(ssss);
         Measurement mmmm = this.measurementBuilder.buildMeasurement(sssss);
 
+        measurement.setUser(userRepository.findByUsername("Attegates"));
+        m.setUser(userRepository.findByUsername("Attegates"));
+        mm.setUser(userRepository.findByUsername("Attegates"));
+        mmm.setUser(userRepository.findByUsername("Attegates"));
+        mmmm.setUser(userRepository.findByUsername("Atte Gates"));
+
         measurementRepository.save(measurement);
         measurementRepository.save(m);
         measurementRepository.save(mm);
         measurementRepository.save(mmm);
         measurementRepository.save(mmmm);
-        */
-        //SpringApplication.exit(context);
+
+        SpringApplication.exit(context);*/
     }
 }

@@ -39,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-                .and().authorizeRequests().antMatchers("/VAADIN/**", "/PUSH/**", "UIDL/**", "/login", "/signup", "/logout", "vaadinServlet/**").permitAll();
-                //.antMatchers("/main", "/main/**").fullyAuthenticated();
+                .and().authorizeRequests().antMatchers("/VAADIN/**", "/PUSH/**", "UIDL/**", "/login", "/signup", "/logout", "vaadinServlet/**").permitAll()
+                .antMatchers("/main", "/main/**").fullyAuthenticated();
     }
 
     @Bean

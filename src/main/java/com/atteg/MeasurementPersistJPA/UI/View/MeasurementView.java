@@ -5,6 +5,7 @@
  */
 package com.atteg.MeasurementPersistJPA.UI.View;
 
+import com.atteg.MeasurementPersistJPA.UI.LogoutButton;
 import com.atteg.MeasurementPersistJPA.UI.layout.MeasurementLayout;
 import com.atteg.MeasurementPersistJPA.UI.layout.TimelineLayout;
 import com.atteg.MeasurementPersistJPA.chart.ChartBuilder;
@@ -22,6 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -41,11 +43,10 @@ public class MeasurementView extends VerticalLayout implements View {
     ComboBox<Measurement> comboBox;
 
     private List<Measurement> measurements;
-    
 
     /**
-     * Content changes to MeasurementLayout or TimelineLayout
-     * depending on which is chosen from the radiobutton group.
+     * Content changes to MeasurementLayout or TimelineLayout depending on which
+     * is chosen from the radiobutton group.
      */
     AbstractOrderedLayout content;
 
@@ -57,16 +58,18 @@ public class MeasurementView extends VerticalLayout implements View {
 
     @PostConstruct
     void init() {
-        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);        
+        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        this.measurements = measurementRepository.findAll();
+        this.measurements = measurementRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
         group = new RadioButtonGroup<>();
         group.setItems(Option.Single, Option.Timeline);
         addComponent(group);
+        
+        addComponent(new LogoutButton());
 
         group.addValueChangeListener(e -> {
             if (e.getValue() == Option.Single) {
