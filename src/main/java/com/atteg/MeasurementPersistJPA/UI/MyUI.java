@@ -19,10 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Atte
  */
-@SpringUI
+@SpringUI(path = MyUI.PATH)
 @Theme("valo")
 public class MyUI extends UI {
 
+    public static final String PATH = "/main";
+    
     Navigator navigator;
     
     @Autowired

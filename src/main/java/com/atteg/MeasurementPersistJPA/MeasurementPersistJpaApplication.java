@@ -1,15 +1,20 @@
 package com.atteg.MeasurementPersistJPA;
 
-import com.atteg.MeasurementPersistJPA.model.*;
-import com.atteg.MeasurementPersistJPA.model.builder.DataParser;
-import com.atteg.MeasurementPersistJPA.model.builder.MeasurementBuilder;
-import com.atteg.MeasurementPersistJPA.repository.*;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import com.atteg.MeasurementPersistJPA.model.builder.DataParser;
+import com.atteg.MeasurementPersistJPA.model.builder.MeasurementBuilder;
+import com.atteg.MeasurementPersistJPA.repository.LeftArmRepository;
+import com.atteg.MeasurementPersistJPA.repository.LeftLegRepository;
+import com.atteg.MeasurementPersistJPA.repository.MeasurementRepository;
+import com.atteg.MeasurementPersistJPA.repository.ResultsRepository;
+import com.atteg.MeasurementPersistJPA.repository.RightArmRepository;
+import com.atteg.MeasurementPersistJPA.repository.RightLegRepository;
+import com.atteg.MeasurementPersistJPA.repository.TorsoRepository;
 
 @SpringBootApplication
 public class MeasurementPersistJpaApplication implements CommandLineRunner {

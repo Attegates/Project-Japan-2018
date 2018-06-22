@@ -61,6 +61,10 @@
             <artifactId>vaadin-chartjs</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
     </dependencies>
     
     <repositories>
