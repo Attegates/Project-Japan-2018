@@ -15,6 +15,8 @@ import com.atteg.MeasurementPersistJPA.repository.ResultsRepository;
 import com.atteg.MeasurementPersistJPA.repository.RightArmRepository;
 import com.atteg.MeasurementPersistJPA.repository.RightLegRepository;
 import com.atteg.MeasurementPersistJPA.repository.TorsoRepository;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 public class MeasurementPersistJpaApplication implements CommandLineRunner {

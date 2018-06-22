@@ -30,11 +30,11 @@ public class MyUI extends UI {
     @Autowired
     SpringViewProvider viewProvider;
     
+    
+    
     @Override
-    protected void init(VaadinRequest request) {
+    protected void init(VaadinRequest request) {        
         navigator = new Navigator(this, this);
         navigator.addProvider(viewProvider);
-        navigator.addView(MainView.NAME, MainView.class);
-        navigator.addView(TestView.NAME, TestView.class);
     }
 }
