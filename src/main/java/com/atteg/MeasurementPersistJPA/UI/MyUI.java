@@ -5,8 +5,6 @@
  */
 package com.atteg.MeasurementPersistJPA.UI;
 
-import com.atteg.MeasurementPersistJPA.UI.View.MainView;
-import com.atteg.MeasurementPersistJPA.UI.View.TestView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;

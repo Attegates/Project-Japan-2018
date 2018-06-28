@@ -5,6 +5,9 @@
  */
 package com.atteg.MeasurementPersistJPA.security;
 
+import com.atteg.MeasurementPersistJPA.UI.LoginUI;
+import com.atteg.MeasurementPersistJPA.UI.MeasurementUI;
+import com.atteg.MeasurementPersistJPA.UI.SignupUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +28,7 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Autowired  // UserServiceImpl
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -39,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-                .and().authorizeRequests().antMatchers("/VAADIN/**", "/PUSH/**", "UIDL/**", "/login", "/signup", "/logout", "vaadinServlet/**").permitAll()
-                .antMatchers("/main", "/main/**").fullyAuthenticated();
+                .and().authorizeRequests().antMatchers("/VAADIN/**", "/PUSH/**", "UIDL/**", LoginUI.PATH, SignupUI.PATH, "/logout", "vaadinServlet/**").permitAll()
+                .antMatchers(MeasurementUI.PATH).fullyAuthenticated();
     }
 
     @Bean

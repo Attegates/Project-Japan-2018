@@ -1,6 +1,5 @@
 package com.atteg.MeasurementPersistJPA;
 
-import com.atteg.MeasurementPersistJPA.model.Measurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,9 +16,6 @@ import com.atteg.MeasurementPersistJPA.repository.RightArmRepository;
 import com.atteg.MeasurementPersistJPA.repository.RightLegRepository;
 import com.atteg.MeasurementPersistJPA.repository.TorsoRepository;
 import com.atteg.MeasurementPersistJPA.repository.UserRepository;
-import java.util.List;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 public class MeasurementPersistJpaApplication implements CommandLineRunner {

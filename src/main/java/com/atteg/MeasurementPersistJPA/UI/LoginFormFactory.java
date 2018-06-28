@@ -79,7 +79,7 @@ public class LoginFormFactory {
                     Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
                     SecurityContextHolder.getContext().setAuthentication(authenticated);
 
-                    UI.getCurrent().getPage().setLocation(MyUI.PATH);
+                    UI.getCurrent().getPage().setLocation(MeasurementUI.PATH);
                 } catch (AuthenticationException e) {
                     Notification.show("Error!", "Login failed. Try again.", Notification.Type.ERROR_MESSAGE);
                 }
