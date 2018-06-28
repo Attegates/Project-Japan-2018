@@ -15,11 +15,10 @@ import java.util.Map;
  *
  * @author Atte
  */
-
 public class MeasurementBuilder {
 
     private final IDataParser dataParser;
-    
+
     public MeasurementBuilder(IDataParser dataParser) {
         this.dataParser = dataParser;
     }
@@ -27,34 +26,34 @@ public class MeasurementBuilder {
     public Measurement buildMeasurement(String dataString) {
         Map<String, String> parsedData;
         parsedData = this.dataParser.parseData(dataString);
-        
+
         Measurement m = new Measurement();
-        
-        
+
         try {
-            m.setDate(parseDate("Da", parsedData));
+            Date date = parseDate("Da", parsedData);
+            m.setDate(date);
         } catch (ParseException e) {
             System.out.println(e);
         }
-        
+
         m.setLeftArm(buildLeftArm(parsedData));
         m.getLeftArm().setMeasurement(m);
-        
+
         m.setLeftLeg(buildLeftLeg(parsedData));
         m.getLeftLeg().setMeasurement(m);
-        
+
         m.setRightArm(buildRightArm(parsedData));
         m.getRightArm().setMeasurement(m);
-        
+
         m.setRightLeg(buildRightLeg(parsedData));
         m.getRightLeg().setMeasurement(m);
-        
+
         m.setTorso(buildTorso(parsedData));
         m.getTorso().setMeasurement(m);
-        
+
         m.setResults(buildResults(parsedData));
         m.getResults().setMeasurement(m);
-        
+
         return m;
     }
 
@@ -97,7 +96,7 @@ public class MeasurementBuilder {
         leftArm.setMuscleMass(parseDoubleVal("ml", parsedData));
         return leftArm;
     }
-    
+
     private Results buildResults(Map<String, String> parsedData) {
         Results results = new Results();
         results.setAge(parseIntVal("AG", parsedData));
@@ -123,17 +122,17 @@ public class MeasurementBuilder {
     private double parseDoubleVal(String key, Map<String, String> parsedData) {
         return Double.parseDouble(parsedData.get(key));
     }
-    
+
     private int parseIntVal(String key, Map<String, String> parsedData) {
-        return Integer.parseInt(parsedData.get(key));                
+        return Integer.parseInt(parsedData.get(key));
     }
-    
+
     private Date parseDate(String key, Map<String, String> parsedData) throws ParseException {
         return new SimpleDateFormat("dd/MM/yyyy").parse(parsedData.get(key));
     }
-    
+
     private Sex parseSex(String key, Map<String, String> parsedData) {
         int val = parseIntVal(key, parsedData);
-        return val == 1 ? Sex.MALE : Sex.FEMALE;            
+        return val == 1 ? Sex.MALE : Sex.FEMALE;
     }
 }

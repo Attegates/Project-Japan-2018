@@ -10,10 +10,12 @@ import com.atteg.MeasurementPersistJPA.UI.layout.TimelineLayout;
 import com.atteg.MeasurementPersistJPA.chart.ChartBuilder;
 import com.atteg.MeasurementPersistJPA.model.Measurement;
 import com.atteg.MeasurementPersistJPA.repository.MeasurementRepository;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RadioButtonGroup;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,7 @@ public class MeasurementUIFactory {
         private VerticalLayout root;
         private Panel topPanel;
         private RadioButtonGroup<Option> radioGroup;
+        private Button add;
         private LogoutButton logout;
         private Panel contentPanel;
 
@@ -63,6 +66,10 @@ public class MeasurementUIFactory {
                }
             });
 
+            add = new Button("Add new");
+            add.addClickListener(e -> {
+                UI.getCurrent().getPage().setLocation(AddMeasurementUI.PATH);
+            });
             logout = new LogoutButton();
             
             measurements = measurementRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -72,7 +79,7 @@ public class MeasurementUIFactory {
 
         public Component layout() {
             root.addComponent(topPanel);
-            topPanel.setContent(new HorizontalLayout(radioGroup, logout));
+            topPanel.setContent(new HorizontalLayout(radioGroup, add, logout));
             root.addComponent(contentPanel);
             return root;
         }

@@ -5,7 +5,6 @@
  */
 package com.atteg.MeasurementPersistJPA.security;
 
-import com.atteg.MeasurementPersistJPA.model.CustomUserDetails;
 import com.atteg.MeasurementPersistJPA.model.User;
 import com.atteg.MeasurementPersistJPA.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,8 @@ public class UserServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-
-        return new CustomUserDetails(user.getUsername(), user.getPassword(), true, true, true, true, user.getAuthorities());
+        return user;
+        //return new CustomUserDetails(user.getUsername(), user.getPassword(), true, true, true, true, user.getAuthorities());
 
     }
 

@@ -5,7 +5,6 @@
  */
 package com.atteg.MeasurementPersistJPA.UI;
 
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

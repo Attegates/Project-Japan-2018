@@ -5,6 +5,7 @@
  */
 package com.atteg.MeasurementPersistJPA.security;
 
+import com.atteg.MeasurementPersistJPA.UI.AddMeasurementUI;
 import com.atteg.MeasurementPersistJPA.UI.LoginUI;
 import com.atteg.MeasurementPersistJPA.UI.MeasurementUI;
 import com.atteg.MeasurementPersistJPA.UI.SignupUI;
@@ -43,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                 .and().authorizeRequests().antMatchers("/VAADIN/**", "/PUSH/**", "UIDL/**", LoginUI.PATH, SignupUI.PATH, "/logout", "vaadinServlet/**").permitAll()
-                .antMatchers(MeasurementUI.PATH).fullyAuthenticated();
+                .antMatchers(MeasurementUI.PATH, AddMeasurementUI.PATH).fullyAuthenticated();
     }
 
     @Bean
