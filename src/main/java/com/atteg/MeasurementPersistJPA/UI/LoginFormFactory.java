@@ -5,6 +5,8 @@
  */
 package com.atteg.MeasurementPersistJPA.UI;
 
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -57,6 +59,7 @@ public class LoginFormFactory {
 
             loginButton = new Button("Login");
             loginButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+            loginButton.setClickShortcut(KeyCode.ENTER);
             signupButton = new Button("Signup");
             signupButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 

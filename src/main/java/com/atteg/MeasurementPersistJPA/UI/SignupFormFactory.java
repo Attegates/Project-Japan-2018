@@ -7,6 +7,7 @@ package com.atteg.MeasurementPersistJPA.UI;
 
 import com.atteg.MeasurementPersistJPA.security.RegisterUserService;
 import com.atteg.MeasurementPersistJPA.security.UsernameExistsException;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -51,14 +52,16 @@ public class SignupFormFactory {
             panel.setSizeUndefined();
 
             saveButton = new Button("Sign Up");
-            saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+            saveButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+            saveButton.setClickShortcut(KeyCode.ENTER);
 
             username = new TextField("Username");
             password = new PasswordField("Password");
             passwordAgain = new PasswordField("Password again");
 
             /*
-            Currently only checks that passwords match.
+            Currently only checks that passwords match
+            and username does not already exist.
              */
             saveButton.addClickListener(event -> {
                 if (!password.getValue().equals(passwordAgain.getValue())) {
